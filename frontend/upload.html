@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload CV</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 10px;
+            width: 400px;
+            text-align: center;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            border: none;
+            background: #3b82f6;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #results {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .card {
+            background: #334155;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Upload CV</h2>
+
+    <input type="file" id="cvFile" accept=".pdf,.docx" />
+    <br>
+    <button onclick="uploadCV()">Match CV</button>
+
+    <p id="error"></p>
+    <div id="results"></div>
+</div>
+
+<script>
+async function uploadCV() {
+    const fileInput = document.getElementById("cvFile");
+    const resultsDiv = document.getElementById("results");
+    const errorDiv = document.getElementById("error");
+
+    resultsDiv.innerHTML = "";
+    errorDiv.innerText = "";
+
+    if (!fileInput.files.length) {
+        errorDiv.innerText = "Please choose a file!";
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("cv", fileInput.files[0]);
+
+    try {
+        const response = await fetch("http://127.0.0.1:8000/api/match-cv/", {
+            method: "POST",
+            body: formData
+        });
+
+        const text = await response.text();
+        console.log("RAW RESPONSE:", text);
+
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch {
+            errorDiv.innerText = "Server returned HTML instead of JSON. Check Django terminal.";
+            return;
+        }
+
+        if (data.error) {
+            errorDiv.innerText = data.error;
+            return;
+        }
+
+        data.results.forEach(item => {
+            const card = document.createElement("div");
+            card.className = "card";
+            card.innerHTML = `
+                <b>${item.job}</b><br>
+                Company: ${item.company}<br>
+                Cosine: ${item.cosine_score}<br>
+                Jaccard: ${item.jaccard_score}<br>
+                Final: ${item.final_score}
+            `;
+            resultsDiv.appendChild(card);
+        });
+
+    } catch (error) {
+        console.error("FULL ERROR:", error);
+        errorDiv.innerText = "Error: " + error.message;
+    }
+}
+</script>
+
+</body>
+</html>

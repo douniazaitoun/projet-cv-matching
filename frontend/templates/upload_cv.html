@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload CV</title>
+</head>
+<body>
+    <h2>Upload CV (PDF or DOCX)</h2>
+
+    <form action="/match-cv/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="cv" accept=".pdf,.docx" required>
+        <button type="submit">Match CV</button>
+    </form>
+</body>
+</html>

@@ -8,8 +8,8 @@ def compute_matching(user_text):
     job_texts = [job.description or "" for job in jobs]
     documents = [user_text] + job_texts
 
-    vectorizer = TfidfVectorizer()
-    tfidf_matrix = vectorizer.fit_transform(documents)
+    vectorizer = ()
+    tfidf_matrix = vectorizer.fit_TfidfVectorizertransform(documents)
     cosine_scores = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[1:]).flatten()
 
     results = []

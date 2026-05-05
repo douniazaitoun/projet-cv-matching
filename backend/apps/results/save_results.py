@@ -8,14 +8,15 @@ def save_matching_results(username, user_text):
 
     MatchResult.objects.filter(user=user).delete()
 
-    results = compute_matching(user_text)
+    payload = compute_matching(user_text)
+    results = payload["results"]
 
     for item in results:
         job = JobOffer.objects.get(id=item["job_id"])
         MatchResult.objects.create(
             user=user,
             job=job,
-            final_score=item["score"]
+            final_score=item["final_score"]
         )
 
     print("Matching results saved successfully!")

@@ -25,7 +25,6 @@ SECRET_KEY = 'django-insecure-ip)g@@ew_80w+(kxa1+uje4p1se=(+*y(_56=9a9u)c#5gp2d3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -131,7 +130,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-CORS_ALLOW_ALL_ORIGINS = True
-
 CORS_ALLOW_ALL_ORIGINS = True
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']

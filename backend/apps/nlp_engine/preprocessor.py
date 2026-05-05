@@ -17,8 +17,12 @@ except OSError:
     try:
         nlp = spacy.load("fr_core_news_sm")
     except OSError:
-        # Fallback to English if no French model is installed
-        nlp = spacy.load("en_core_web_sm")
+        try:
+            # Fallback to English model if available
+            nlp = spacy.load("en_core_web_sm")
+        except OSError:
+            # Last-resort fallback keeps API functional without external model downloads.
+            nlp = spacy.blank("fr")
  
  
 # ──────────────────────────────────────────────

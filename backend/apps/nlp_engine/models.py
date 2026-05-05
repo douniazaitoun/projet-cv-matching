@@ -1,14 +1,4 @@
 from django.db import models
-
-"""
-models.py
-Django models for the NLP engine:
-  - CVDocument   : uploaded CV file + extracted raw text
-  - CVProfile    : structured extracted data (sections, skills, contact)
-  - SkillVector  : stored TF-IDF vector representation (as JSON)
-"""
- 
-from django.db import models
 from django.contrib.auth.models import User
  
  

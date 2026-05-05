@@ -17,3 +17,11 @@ cv_matching/
 
 # OS
 .DS_Store 
+
+backend/.venv/
+backend/frontend/node_modules/
+backend/frontend/build/
+backend/media/
+__pycache__/
+*.pyc
+db.sqlite3backend/frontend/datamining_cvproject/

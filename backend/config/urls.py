@@ -1,15 +1,13 @@
 from django.contrib import admin
-from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path, include
-
-from apps.matching.views import match_uploaded_cv_view
+from django.urls import include, path
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/match-cv/', match_uploaded_cv_view),
+    path("api/", include("apps.auth_users.urls")),
+    path("api/", include("apps.matching.urls")),
     path("api/nlp/", include("apps.nlp_engine.urls")),
 ]
 
